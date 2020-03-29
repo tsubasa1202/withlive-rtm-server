@@ -19,8 +19,17 @@
         <groupId>io.agora.rtm</groupId> 
         <artifactId>agora-rtm-sdk</artifactId>                      
         <version>1.0</version>                                                  
-      </dependency>                                                             
+      </dependency>   
+
+          <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>3.0.2.RELEASE</version>
+        </dependency>                                                          
     </dependencies>
+
+
 
     <build>                               
         <plugins>                                                               

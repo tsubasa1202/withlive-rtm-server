@@ -16,6 +16,7 @@ import io.agora.rtm.RtmChannelListener;
 import io.agora.rtm.RtmChannelMember;
 import io.agora.rtm.RtmStatusCode;
 import io.agora.rtm.RtmChannelAttribute;
+import org.springframework.web.client.RestTemplate;
 
 class APPID {
     public static final String APP_ID = "30c649a7e7c041c7bd628f673246715e";
@@ -43,6 +44,10 @@ class ChannelListener implements RtmChannelListener {
         String msg = message.getText();
         System.out.println("Receive message from channel: " + channel_ +
         " member: " + account + " message: " + msg);
+
+        RestTemplate restTemplate = new RestTemplate();
+        Comment commnet = new Comment(channel_, account, msg);
+        restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, null);
     }
 
     @Override
@@ -57,6 +62,18 @@ class ChannelListener implements RtmChannelListener {
         String account = member.getUserId();
         System.out.println("member " + account + " lefted the channel "
                          + channel_);
+    }
+}
+
+class Comment {
+    private String channel;
+    private String uid;
+    private String msg;
+   
+    Comment(String channel, String uid, String msg){
+        this.channel = channel;
+        this.uid = uid;
+        this.msg = msg;
     }
 }
 
