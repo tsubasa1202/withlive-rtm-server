@@ -303,8 +303,8 @@ public class RtmJavaDemo {
                 client_.p2pChat(dst);
             } else if (choice == 2) {
                 System.out.println("please input your channel ID:");
-                scn.nextLine();
-                String channel = scn.nextLine();
+                // scn.nextLine();
+                String channel = "test-live";
                 client_.groupChat(channel);
             } else if (choice == 3) {
                 client_.logout();
