@@ -50,14 +50,11 @@ class ChannelListener implements RtmChannelListener {
         " member: " + account + " message: " + msg);
 
         RestTemplate restTemplate = new RestTemplate();
-        Comment commnet = new Comment(channel_, account, msg);
-        System.out.println(commnet);
-
         String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";
 
         try{
             System.out.println("before_getForObject");
-            restTemplate.getForObject(url, null, account, channel_, msg);
+            Comment res = restTemplate.getForObject(url, Comment.class, account, channel_, msg);
             System.out.println("after_getForObject");
         }catch(RestClientException e){
             System.out.println(e);
@@ -80,15 +77,9 @@ class ChannelListener implements RtmChannelListener {
 }
 
  class Comment {
-    private String channel;
-    private String uid;
-    private String msg;
-   
-    Comment(String channel, String uid, String msg){
-        this.channel = channel;
-        this.uid = uid;
-        this.msg = msg;
-    }
+    String user_id;
+    String channel;
+    String comment;
 }
 
 public class RtmJavaDemo {
