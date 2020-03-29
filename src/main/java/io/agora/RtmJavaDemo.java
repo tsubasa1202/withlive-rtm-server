@@ -121,7 +121,7 @@ public class RtmJavaDemo {
     public boolean login() {
         System.out.println("Please enter userID (literal \"null\" or starting " +
             "with space is not allowed, no more than 64 charaters!):");
-        String userId = "admin";
+        String userId = "admin-user";
         if (userId.equals("") ||
             userId.startsWith(" ") ||
             userId.equals("null")) {
