@@ -152,8 +152,6 @@ public class RtmJavaDemo {
             public void onSuccess(Void responseInfo) {
                 loginStatus = true;
                 System.out.println("login success!");
-                String channel = "test-live";
-                groupChat(channel);
             }
             //@Override
             public void onFailure(ErrorInfo errorInfo) {
@@ -278,10 +276,19 @@ public class RtmJavaDemo {
     public static void main(String[] args) {
         RtmJavaDemo client_ = new RtmJavaDemo();
         client_.init();
-        if (!client_.loginStatus) {
-            if (!client_.login()){
-                System.out.println("ログインに失敗");
+        while(true) {
+            System.out.println("ループします");
+            if (!client_.loginStatus) {
+                if (!client_.login())
+                    continue;
             }
+            try{
+                Thread.sleep(2000);
+            }catch(Exception e){
+                System.out.println(e);
+            }
+            String channel = "test-live";
+            client_.groupChat(channel);
         }
     }
 }
