@@ -238,6 +238,7 @@ public class RtmJavaDemo {
         RtmJavaDemo client_ = new RtmJavaDemo();
         client_.init();
         while(true) {
+            System.out.println("begin loop")
             if (!client_.loginStatus) {
                 if (!client_.login())
                     continue;
