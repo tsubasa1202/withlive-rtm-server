@@ -152,6 +152,8 @@ public class RtmJavaDemo {
             public void onSuccess(Void responseInfo) {
                 loginStatus = true;
                 System.out.println("login success!");
+                String channel = "test-live";
+                groupChat(channel);
             }
             //@Override
             public void onFailure(ErrorInfo errorInfo) {
@@ -193,8 +195,6 @@ public class RtmJavaDemo {
             @Override
             public void onSuccess(Void responseInfo) {
                 System.out.println("join channel success!");
-                String channel = "test-live";
-                groupChat(channel);
             }
 
             @Override
