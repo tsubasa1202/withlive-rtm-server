@@ -193,6 +193,8 @@ public class RtmJavaDemo {
             @Override
             public void onSuccess(Void responseInfo) {
                 System.out.println("join channel success!");
+                String channel = "test-live";
+                groupChat(channel);
             }
 
             @Override
@@ -277,6 +279,7 @@ public class RtmJavaDemo {
         RtmJavaDemo client_ = new RtmJavaDemo();
         client_.init();
         while(true) {
+            System.out.println("ループします");
             if (!client_.loginStatus) {
                 if (!client_.login())
                     continue;
@@ -304,8 +307,7 @@ public class RtmJavaDemo {
             } else if (choice == 2) {
                 System.out.println("please input your channel ID:");
                 // scn.nextLine();
-                String channel = "test-live";
-                client_.groupChat(channel);
+                
             } else if (choice == 3) {
                 client_.logout();
                 System.out.println("quit the demo? yes/no");
