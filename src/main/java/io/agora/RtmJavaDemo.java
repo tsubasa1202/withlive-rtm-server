@@ -46,26 +46,16 @@ class ChannelListener implements RtmChannelListener {
             final RtmMessage message, final RtmChannelMember fromMember) {
         String account = fromMember.getUserId();
         String msg = message.getText();
-        System.out.println("Receive message from channel: " + channel_ +
-        " member: " + account + " message: " + msg);
+        // System.out.println("Receive message from channel: " + channel_ +
+        // " member: " + account + " message: " + msg);
 
         RestTemplate restTemplate = new RestTemplate();
-        Comment commnet = new Comment(channel_, account, msg);
-        System.out.println(commnet);
-
-
-        String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";
-
-        
+        String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";        
         try{
             System.out.println("before_getForObject");
-            Comment res1 = restTemplate.getForObject(url, Comment.class, account, channel_, msg);
+            String res1 = restTemplate.getForObject(url, String.class, account, channel_, msg);
             System.out.println("after_getForObject");
-            // ResponseEntity<Comment> res2 = restTemplate.exchange(url, HttpMethod.POST, null, Comment.class, commnet);
-            // Comment re3 = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
-            // ResponseEntity<Comment> responseEntity = restTemplate.postForEntity(url, commnet, Comment.class);
             System.out.println(res1);
-            // System.out.println(res2);
         }catch(RestClientException e){
             System.out.println(e);
         }
