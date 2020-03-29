@@ -48,8 +48,10 @@ class ChannelListener implements RtmChannelListener {
         RestTemplate restTemplate = new RestTemplate();
         Comment commnet = new Comment(channel_, account, msg);
         System.out.println(commnet);
-        Comment res = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
-        System.out.println(res);
+        Comment res1 = restTemplate.getForObject("https://withlive-backend-staging.appspot.com/v1/comment", Comment.class);
+        Comment res2 = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
+        System.out.println(res1);
+        System.out.println(res2);
 
     }
 
