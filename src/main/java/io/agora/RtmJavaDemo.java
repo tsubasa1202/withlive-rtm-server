@@ -259,7 +259,8 @@ public class RtmJavaDemo {
         client_.init();
         if (!client_.loginStatus) {
             if (!client_.login())
-                continue;
+            System.out.println("failed login");
+            System.exit(0);
         }
 
         String channel  = "test-live";
