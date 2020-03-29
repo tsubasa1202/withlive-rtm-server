@@ -46,17 +46,30 @@ class ChannelListener implements RtmChannelListener {
             final RtmMessage message, final RtmChannelMember fromMember) {
         String account = fromMember.getUserId();
         String msg = message.getText();
-        // System.out.println("Receive message from channel: " + channel_ +
-        // " member: " + account + " message: " + msg);
+        System.out.println("Receive message from channel: " + channel_ +
+        " member: " + account + " message: " + msg);
 
         RestTemplate restTemplate = new RestTemplate();
+        Comment commnet = new Comment(channel_, account, msg);
+        System.out.println(commnet);
+
+
         String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";
 
+        
         try{
-            String res = restTemplate.getForObject(url, String.class, account, channel_, msg);
+            System.out.println("before_getForObject");
+            Comment res1 = restTemplate.getForObject(url, Comment.class, account, channel_, msg);
+            System.out.println("after_getForObject");
+            // ResponseEntity<Comment> res2 = restTemplate.exchange(url, HttpMethod.POST, null, Comment.class, commnet);
+            // Comment re3 = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
+            // ResponseEntity<Comment> responseEntity = restTemplate.postForEntity(url, commnet, Comment.class);
+            System.out.println(res1);
+            // System.out.println(res2);
         }catch(RestClientException e){
             System.out.println(e);
         }
+        
     }
 
     @Override
@@ -75,9 +88,15 @@ class ChannelListener implements RtmChannelListener {
 }
 
  class Comment {
-    String user_id;
-    String channel;
-    String comment;
+    private String channel;
+    private String uid;
+    private String msg;
+   
+    Comment(String channel, String uid, String msg){
+        this.channel = channel;
+        this.uid = uid;
+        this.msg = msg;
+    }
 }
 
 public class RtmJavaDemo {
@@ -262,9 +281,47 @@ public class RtmJavaDemo {
                 if (!client_.login())
                     continue;
             }
-            String channel = "test-live";
-            client_.groupChat(channel);
+            System.out.println("1: peer to peer chat\n"
+                             + "2: group chat\n"
+                             + "3: logout");
+            System.out.println("please input your choice:");
+            Scanner scn = new Scanner(System.in);
+            int choice = 2;
+            /*
+            if (scn.hasNextInt()) {
+                choice = scn.nextInt();
+            } else {
+                System.out.println("your input is not an int type");
+                continue;
+            }
+            */
+            if (choice == 1) {
+                System.out.println("please input your destination user ID:");
+                scn.nextLine();
+                String dst = scn.nextLine();
+                System.out.println("input destination ID:" + dst);
+                client_.p2pChat(dst);
+            } else if (choice == 2) {
+                System.out.println("please input your channel ID:");
+                scn.nextLine();
+                String channel = scn.nextLine();
+                client_.groupChat(channel);
+            } else if (choice == 3) {
+                client_.logout();
+                System.out.println("quit the demo? yes/no");
+                scn.nextLine();
+                if (scn.hasNextLine()) {
+                    String quit = scn.nextLine();
+                    if (quit.equals("yes")) {
+                        break;
+                    }
+                }
+            } else {
+                continue;
+            }
         }
+        System.out.println("leaving demo...");
+        System.exit(0);
     }
 }
 
