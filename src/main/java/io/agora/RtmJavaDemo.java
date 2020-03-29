@@ -47,7 +47,10 @@ class ChannelListener implements RtmChannelListener {
 
         RestTemplate restTemplate = new RestTemplate();
         Comment commnet = new Comment(channel_, account, msg);
-        restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, null);
+        System.out.println(commnet);
+        Comment res = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
+        System.out.println(res);
+
     }
 
     @Override
@@ -65,7 +68,7 @@ class ChannelListener implements RtmChannelListener {
     }
 }
 
-class Comment {
+ class Comment {
     private String channel;
     private String uid;
     private String msg;
