@@ -265,8 +265,6 @@ public class RtmJavaDemo {
             String channel = "test-live";
             client_.groupChat(channel);
         }
-        System.out.println("leaving demo...");
-        System.exit(0);
     }
 }
 
