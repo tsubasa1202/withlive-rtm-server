@@ -50,8 +50,8 @@ class ChannelListener implements RtmChannelListener {
         " member: " + account + " message: " + msg);
 
         RestTemplate restTemplate = new RestTemplate();
-        // Comment commnet = new Comment(channel_, account, msg);
-        //System.out.println(commnet);
+        Comment commnet = new Comment(channel_, account, msg);
+        System.out.println(commnet);
         // Map<String, String> params = new HashMap<String, String>();
         // params.put("user_id", account);
         // params.put("channel", channel_);
@@ -66,9 +66,10 @@ class ChannelListener implements RtmChannelListener {
             Comment res1 = restTemplate.getForObject(url, Comment.class, account, channel_, msg);
             System.out.println("after_getForObject");
             // ResponseEntity<Comment> res2 = restTemplate.exchange(url, HttpMethod.POST, null, Comment.class, commnet);
-            // Comment res2 = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
+            Comment res2 = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
             // ResponseEntity<Comment> responseEntity = restTemplate.postForEntity(url, commnet, Comment.class);
             System.out.println(res1);
+            System.out.println(res2);
         }catch(RestClientException e){
             System.out.println(e);
         }
