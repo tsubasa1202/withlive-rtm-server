@@ -17,8 +17,14 @@ import io.agora.rtm.RtmChannelMember;
 import io.agora.rtm.RtmStatusCode;
 import io.agora.rtm.RtmChannelAttribute;
 
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
 class APPID {
-    public static final String APP_ID = "30c649a7e7c041c7bd628f673246715e";
+    // public static final String APP_ID = "30c649a7e7c041c7bd628f673246715e"; // stg
+    public static final String APP_ID = "7283600d39c043038867f64dd8a04d72"; // prod
 }
 
 class ChannelListener implements RtmChannelListener {
@@ -41,8 +47,21 @@ class ChannelListener implements RtmChannelListener {
             final RtmMessage message, final RtmChannelMember fromMember) {
         String account = fromMember.getUserId();
         String msg = message.getText();
-        System.out.println("Receive message from channel: " + channel_ +
-        " member: " + account + " message: " + msg);
+        // System.out.println("Receive message from channel: " + channel_ +
+        // " member: " + account + " message: " + msg);
+
+        RestTemplate restTemplate = new RestTemplate();
+        // String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}"; // stg
+        String url = "https://withlive-backend.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";  // prod
+        try{
+            System.out.println("before_getForObject");
+            String res1 = restTemplate.getForObject(url, String.class, account, channel_, msg);
+            System.out.println("after_getForObject");
+            System.out.println(res1);
+        }catch(RestClientException e){
+            System.out.println(e);
+        }
+        
     }
 
     @Override
@@ -57,6 +76,18 @@ class ChannelListener implements RtmChannelListener {
         String account = member.getUserId();
         System.out.println("member " + account + " lefted the channel "
                          + channel_);
+    }
+}
+
+ class Comment {
+    private String channel;
+    private String uid;
+    private String msg;
+   
+    Comment(String channel, String uid, String msg){
+        this.channel = channel;
+        this.uid = uid;
+        this.msg = msg;
     }
 }
 
@@ -101,7 +132,7 @@ public class RtmJavaDemo {
     public boolean login() {
         System.out.println("Please enter userID (literal \"null\" or starting " +
             "with space is not allowed, no more than 64 charaters!):");
-        String userId = scn.nextLine();
+        String userId = "admin-user";
         if (userId.equals("") ||
             userId.startsWith(" ") ||
             userId.equals("null")) {
@@ -242,45 +273,14 @@ public class RtmJavaDemo {
                 if (!client_.login())
                     continue;
             }
-            System.out.println("1: peer to peer chat\n"
-                             + "2: group chat\n"
-                             + "3: logout");
-            System.out.println("please input your choice:");
-            Scanner scn = new Scanner(System.in);
-            int choice;
-            if (scn.hasNextInt()) {
-                choice = scn.nextInt();
-            } else {
-                System.out.println("your input is not an int type");
-                continue;
+            try{
+                Thread.sleep(2000);
+            }catch(Exception e){
+                System.out.println(e);
             }
-            if (choice == 1) {
-                System.out.println("please input your destination user ID:");
-                scn.nextLine();
-                String dst = scn.nextLine();
-                System.out.println("input destination ID:" + dst);
-                client_.p2pChat(dst);
-            } else if (choice == 2) {
-                System.out.println("please input your channel ID:");
-                scn.nextLine();
-                String channel = scn.nextLine();
-                client_.groupChat(channel);
-            } else if (choice == 3) {
-                client_.logout();
-                System.out.println("quit the demo? yes/no");
-                scn.nextLine();
-                if (scn.hasNextLine()) {
-                    String quit = scn.nextLine();
-                    if (quit.equals("yes")) {
-                        break;
-                    }
-                }
-            } else {
-                continue;
-            }
+            String channel = "umeda_hatanaka_live_28932392";
+            client_.groupChat(channel);
         }
-        System.out.println("leaving demo...");
-        System.exit(0);
     }
 }
 
