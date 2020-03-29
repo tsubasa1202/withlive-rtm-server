@@ -50,7 +50,7 @@ class ChannelListener implements RtmChannelListener {
         // " member: " + account + " message: " + msg);
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";        
+        String url = "https://withlive-backend.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";        
         try{
             System.out.println("before_getForObject");
             String res1 = restTemplate.getForObject(url, String.class, account, channel_, msg);
@@ -267,7 +267,6 @@ public class RtmJavaDemo {
         RtmJavaDemo client_ = new RtmJavaDemo();
         client_.init();
         while(true) {
-            System.out.println("ループします");
             if (!client_.loginStatus) {
                 if (!client_.login())
                     continue;
@@ -277,7 +276,7 @@ public class RtmJavaDemo {
             }catch(Exception e){
                 System.out.println(e);
             }
-            String channel = "test-live";
+            String channel = "umeda_hatanaka_live_28932392";
             client_.groupChat(channel);
         }
     }
