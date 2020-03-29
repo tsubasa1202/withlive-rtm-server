@@ -54,7 +54,7 @@ class ChannelListener implements RtmChannelListener {
 
         try{
             System.out.println("before_getForObject");
-            Comment res = restTemplate.getForObject(url, Comment.class, account, channel_, msg);
+            String res = restTemplate.getForObject(url, String.class, account, channel_, msg);
             System.out.println("after_getForObject");
         }catch(RestClientException e){
             System.out.println(e);
