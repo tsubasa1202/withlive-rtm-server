@@ -257,14 +257,16 @@ public class RtmJavaDemo {
     public static void main(String[] args) {
         RtmJavaDemo client_ = new RtmJavaDemo();
         client_.init();
-        if (!client_.loginStatus) {
-            if (!client_.login())
-            System.out.println("failed login");
-            System.exit(0);
+        while(true) {
+            if (!client_.loginStatus) {
+                if (!client_.login())
+                    continue;
+            }
+            String channel = "test-live";
+            client_.groupChat(channel);
         }
-
-        String channel  = "test-live";
-        client_.groupChat(channel);
+        System.out.println("leaving demo...");
+        System.exit(0);
     }
 }
 
