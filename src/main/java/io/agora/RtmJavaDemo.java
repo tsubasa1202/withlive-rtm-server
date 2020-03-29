@@ -17,6 +17,7 @@ import io.agora.rtm.RtmChannelMember;
 import io.agora.rtm.RtmStatusCode;
 import io.agora.rtm.RtmChannelAttribute;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -52,10 +53,12 @@ class ChannelListener implements RtmChannelListener {
         System.out.println(commnet);
         String url = "https://withlive-backend-staging.appspot.com/v1/comment";
         Comment res1 = restTemplate.getForObject(url, Comment.class);
+        ResponseEntity<Comment> res2 = restTemplate.exchange(url, HttpMethod.POST, null, Comment.class, commnet);
+    
         // Comment res2 = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
-        ResponseEntity<Comment> responseEntity = restTemplate.postForEntity(url, commnet, Comment.class);
+        // ResponseEntity<Comment> responseEntity = restTemplate.postForEntity(url, commnet, Comment.class);
         System.out.println(res1);
-        System.out.println(responseEntity);
+        System.out.println(res2);
 
     }
 
