@@ -52,29 +52,17 @@ class ChannelListener implements RtmChannelListener {
         RestTemplate restTemplate = new RestTemplate();
         Comment commnet = new Comment(channel_, account, msg);
         System.out.println(commnet);
-        // Map<String, String> params = new HashMap<String, String>();
-        // params.put("user_id", account);
-        // params.put("channel", channel_);
-        // params.put("msg", msg);
-        // String response = restTemplate.getForObject("http://twitter.com/statuses/user_timeline/{user}.json?count={count}", String.class, "masason", "10");
-        // System.out.println("Response: " + response);
 
-        String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channal={channal}&msg={msg}";
+        String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";
 
-        
         try{
             System.out.println("before_getForObject");
             Comment res1 = restTemplate.getForObject(url, Comment.class, account, channel_, msg);
             System.out.println("after_getForObject");
-            // ResponseEntity<Comment> res2 = restTemplate.exchange(url, HttpMethod.POST, null, Comment.class, commnet);
-            // Comment re3 = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
-            // ResponseEntity<Comment> responseEntity = restTemplate.postForEntity(url, commnet, Comment.class);
             System.out.println(res1);
-            // System.out.println(res2);
         }catch(RestClientException e){
             System.out.println(e);
         }
-        
     }
 
     @Override
