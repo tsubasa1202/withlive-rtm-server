@@ -121,7 +121,7 @@ public class RtmJavaDemo {
     public boolean login() {
         System.out.println("Please enter userID (literal \"null\" or starting " +
             "with space is not allowed, no more than 64 charaters!):");
-        String userId = scn.nextLine();
+        String userId = "admin";
         if (userId.equals("") ||
             userId.startsWith(" ") ||
             userId.equals("null")) {
@@ -257,50 +257,13 @@ public class RtmJavaDemo {
     public static void main(String[] args) {
         RtmJavaDemo client_ = new RtmJavaDemo();
         client_.init();
-        while(true) {
-            if (!client_.loginStatus) {
-                if (!client_.login())
-                    continue;
-            }
-            System.out.println("1: peer to peer chat\n"
-                             + "2: group chat\n"
-                             + "3: logout");
-            System.out.println("please input your choice:");
-            Scanner scn = new Scanner(System.in);
-            int choice;
-            if (scn.hasNextInt()) {
-                choice = scn.nextInt();
-            } else {
-                System.out.println("your input is not an int type");
+        if (!client_.loginStatus) {
+            if (!client_.login())
                 continue;
-            }
-            if (choice == 1) {
-                System.out.println("please input your destination user ID:");
-                scn.nextLine();
-                String dst = scn.nextLine();
-                System.out.println("input destination ID:" + dst);
-                client_.p2pChat(dst);
-            } else if (choice == 2) {
-                System.out.println("please input your channel ID:");
-                scn.nextLine();
-                String channel = scn.nextLine();
-                client_.groupChat(channel);
-            } else if (choice == 3) {
-                client_.logout();
-                System.out.println("quit the demo? yes/no");
-                scn.nextLine();
-                if (scn.hasNextLine()) {
-                    String quit = scn.nextLine();
-                    if (quit.equals("yes")) {
-                        break;
-                    }
-                }
-            } else {
-                continue;
-            }
         }
-        System.out.println("leaving demo...");
-        System.exit(0);
+
+        String channel  = "test-live";
+        client_.groupChat(channel);
     }
 }
 
