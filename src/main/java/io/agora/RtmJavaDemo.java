@@ -278,52 +278,11 @@ public class RtmJavaDemo {
     public static void main(String[] args) {
         RtmJavaDemo client_ = new RtmJavaDemo();
         client_.init();
-        while(true) {
-            System.out.println("ループします");
-            if (!client_.loginStatus) {
-                if (!client_.login())
-                    continue;
-            }
-            System.out.println("1: peer to peer chat\n"
-                             + "2: group chat\n"
-                             + "3: logout");
-            System.out.println("please input your choice:");
-            Scanner scn = new Scanner(System.in);
-            int choice = 2;
-            /*
-            if (scn.hasNextInt()) {
-                choice = scn.nextInt();
-            } else {
-                System.out.println("your input is not an int type");
-                continue;
-            }
-            */
-            if (choice == 1) {
-                System.out.println("please input your destination user ID:");
-                scn.nextLine();
-                String dst = scn.nextLine();
-                System.out.println("input destination ID:" + dst);
-                client_.p2pChat(dst);
-            } else if (choice == 2) {
-                System.out.println("please input your channel ID:");
-                // scn.nextLine();
-                
-            } else if (choice == 3) {
-                client_.logout();
-                System.out.println("quit the demo? yes/no");
-                scn.nextLine();
-                if (scn.hasNextLine()) {
-                    String quit = scn.nextLine();
-                    if (quit.equals("yes")) {
-                        break;
-                    }
-                }
-            } else {
-                continue;
+        if (!client_.loginStatus) {
+            if (!client_.login()){
+                System.out.println("ログインに失敗");
             }
         }
-        System.out.println("leaving demo...");
-        System.exit(0);
     }
 }
 
