@@ -58,7 +58,7 @@ class ChannelListener implements RtmChannelListener {
         String response = restTemplate.getForObject("http://twitter.com/statuses/user_timeline/{user}.json?count={count}", String.class, "masason", "10");
         System.out.println("Response: " + response);
 
-        String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";
+        String url = "https://withlive-backend-staging.appspot.com/v1/comment/save";
         Comment res1 = restTemplate.getForObject(url, Comment.class, account, channel_, msg);
         // ResponseEntity<Comment> res2 = restTemplate.exchange(url, HttpMethod.POST, null, Comment.class, commnet);
         // Comment res2 = restTemplate.postForObject("https://withlive-backend-staging.appspot.com/v1/comment", commnet, Comment.class);
