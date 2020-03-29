@@ -23,7 +23,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 class APPID {
-    public static final String APP_ID = "30c649a7e7c041c7bd628f673246715e";
+    // public static final String APP_ID = "30c649a7e7c041c7bd628f673246715e"; // stg
+    public static final String APP_ID = "7283600d39c043038867f64dd8a04d72"; // prod
 }
 
 class ChannelListener implements RtmChannelListener {
@@ -50,7 +51,8 @@ class ChannelListener implements RtmChannelListener {
         // " member: " + account + " message: " + msg);
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://withlive-backend.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";        
+        // String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}"; // stg
+        String url = "https://withlive-backend.appspot.com/v1/comment/save?user_id={user_id}&channel={channel}&msg={msg}";  // prod
         try{
             System.out.println("before_getForObject");
             String res1 = restTemplate.getForObject(url, String.class, account, channel_, msg);
