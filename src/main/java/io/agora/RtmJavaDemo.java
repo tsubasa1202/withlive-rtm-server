@@ -61,6 +61,7 @@ class ChannelListener implements RtmChannelListener {
 
         String url = "https://withlive-backend-staging.appspot.com/v1/comment/save?user_id={user_id}&channal={channal}&msg={msg}";
 
+        
         try{
             System.out.println("before_getForObject");
             Comment res1 = restTemplate.getForObject(url, Comment.class, account, channel_, msg);
